@@ -32,9 +32,14 @@ jobs:
           /etc/mysql \
           /etc/php \
           /usr/local/lib/android \
-          /usr/lib/mono
-          /usr/local/share/powershell
-          /usr/lib/google-cloud-sdk
+          /usr/lib/mono \
+          /usr/local/share/powershell \
+          /usr/lib/google-cloud-sdk \
+          /usr/share/swift \
+          /opt/hostedtoolcache \
+          /usr/local/.ghcup \
+          /usr/local/lib/android \
+          /usr/lib/jvm
         sudo -E apt-get -y purge \
           azure-cli \
           ghc* \
