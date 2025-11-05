@@ -30,7 +30,11 @@ jobs:
         sudo rm -rf \
           /usr/share/dotnet \
           /etc/mysql \
-          /etc/php
+          /etc/php \
+          /usr/local/lib/android \
+          /usr/lib/mono
+          /usr/local/share/powershell
+          /usr/lib/google-cloud-sdk
         sudo -E apt-get -y purge \
           azure-cli \
           ghc* \
@@ -38,7 +42,7 @@ jobs:
           hhvm \
           llvm* \
           firefox \
-         google* \
+          google* \
           dotnet* \
           powershell \
           openjdk* \
