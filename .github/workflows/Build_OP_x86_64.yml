@@ -33,6 +33,27 @@ jobs:
           /opt/ghc \
           /etc/mysql \
           /etc/php
+        sudo snap remove "$(snap list 2>/dev/null | awk '!/^Name|^core|^bare|^snapd/ {print $1}')" >/dev/null 2>&1 &
+        wait ; sudo snap remove "$(snap list 2>/dev/null | awk '/^bare/ {print $1}')" >/dev/null 2>&1 &
+        wait ; sudo snap remove "$(snap list 2>/dev/null | awk '/^core/ {print $1}')" >/dev/null 2>&1 &
+        wait ; sudo snap remove "$(snap list 2>/dev/null | awk '/^snapd/ {print $1}')" >/dev/null 2>&1 &
+        wait ; sudo systemctl disable --now snapd >/dev/null 2>&1 &
+        wait ; sudo systemctl disable snapd >/dev/null 2>&1 &
+        wait ; sudo systemctl mask snapd >/dev/null 2>&1 &
+        wait ; sudo apt purge snapd -y -qq >/dev/null 2>&1 &
+        wait ; sudo rm "/snap" -rf >/dev/null 2>&1 &
+        sudo rm "$HOME/snap" -rf >/dev/null 2>&1 &
+        sudo rm "/root/snap" -rf >/dev/null 2>&1 &
+        sudo rm "/var/snap" -rf >/dev/null 2>&1 &
+        sudo rm "/var/cache/snapd" -rf >/dev/null 2>&1 &
+        sudo rm "/var/lib/snapd" -rf >/dev/null 2>&1 &
+        echo "" | sudo tee "/etc/apt/preferences.d/no-snap.pref" >/dev/null 2>&1
+        echo 'Package: snapd' | sudo tee -a "/etc/apt/preferences.d/no-snap.pref" >/dev/null 2>&1 &
+        wait ; echo 'Pin: release a=*' | sudo tee -a "/etc/apt/preferences.d/no-snap.pref" >/dev/null 2>&1 &
+        wait ; echo 'Pin-Priority: -10' | sudo tee -a "/etc/apt/preferences.d/no-snap.pref" >/dev/null 2>&1 &
+        wait ; sudo chown "root:root" "/etc/apt/preferences.d/no-snap.pref" >/dev/null 2>&1 &
+        wait ; sudo apt-get update -qq -y >/dev/null 2>&1 &
+        for S in "$(df -h | awk '/snap/ {print $6}')"; do sudo umount "$S" >/dev/null 2>&1 ; done 
         sudo -E apt-get -y purge azure-cli* docker* ghc* zulu* hhvm* llvm* firefox* google* dotnet* aspnetcore* powershell* openjdk* adoptopenjdk* mysql* php* mongodb* moby* snap* || true
         sudo -E apt-get update
         sudo -E apt-get -y install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev qemu-img
