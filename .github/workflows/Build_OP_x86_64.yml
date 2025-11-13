@@ -29,10 +29,18 @@ jobs:
         echo "Deleting files, please wait ..."
         sudo rm -rf \
           /usr/share/dotnet \
-          /usr/local/lib/android \
-          /opt/ghc \
           /etc/mysql \
-          /etc/php
+          /etc/php \
+          /usr/local/lib/android \
+          /usr/lib/mono \
+          /usr/local/share/powershell \
+          /usr/lib/google-cloud-sdk \
+          /usr/share/swift \
+          /opt/hostedtoolcache \
+          /usr/local/.ghcup \
+          /usr/local/lib/android \
+          /usr/lib/jvm \
+          /usr/share/miniconda
         sudo snap remove "$(snap list 2>/dev/null | awk '!/^Name|^core|^bare|^snapd/ {print $1}')" >/dev/null 2>&1 &
         wait ; sudo snap remove "$(snap list 2>/dev/null | awk '/^bare/ {print $1}')" >/dev/null 2>&1 &
         wait ; sudo snap remove "$(snap list 2>/dev/null | awk '/^core/ {print $1}')" >/dev/null 2>&1 &
